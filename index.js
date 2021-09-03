@@ -37,6 +37,9 @@ function startApplication(){
         if(choiceAnswers === 'View all Employees'){
             viewEmployees();
         }
+        if(choiceAnswers === 'View Department'){
+            viewDepartment();
+        }
         if(choiceAnswers === 'Add a Department'){
             addDepartment();
         }
@@ -58,6 +61,9 @@ function startApplication(){
 
     });
 };
+
+
+//what do I need to do with console table?
 
 // Acceptance Criteria
 
