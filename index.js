@@ -13,16 +13,21 @@ function startApplication(){
     inquirer
         .prompt([
             {
-                type: 'input',
-                name: 'departments',
-                message: 'View All Departments'
-            },
-            {
-                type: 'input',
-                name: 
+                type: 'list',
+                name: 'choices',
+                message: 'Which would you like to do?',
+                choices:[
+                    'View all roles',
+                    'View all Employees',
+                    'Add a Department',
+                    'Add an Employee',
+                    'Update an Employee'
+                ]
             }
-
+    
         ])
+
+
 }
 
 // Acceptance Criteria
