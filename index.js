@@ -1,12 +1,14 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
+const cTable = require('console.table');
+const db = require('../../modules/module-12/u-develop-it/db/connection');
 
 //create the connection to database
 const connection = mysql.createConnection({
     host:'localhost',
     user: 'root',
     password: 'Novabear2010',
-    database: 'test'
+    database: 'employee_db'
 })
 
 function startApplication(){
@@ -22,6 +24,7 @@ function startApplication(){
                     'Add a Department',
                     'Add an Employee',
                     'Update an Employee',
+                    'View Department',
                     'Add Employee',
                     'Add role',
                     'Add Department',
@@ -31,38 +34,55 @@ function startApplication(){
     
         ])
     .then((choiceAnswers) =>{
-        if(choiceAnswers === 'View all roles'){
+        console.log(choiceAnswers);
+        if(choiceAnswers.choices === 'View all roles'){
             viewRoles();
         }
-        if(choiceAnswers === 'View all Employees'){
+        if(choiceAnswers.choices === 'View all Employees'){
             viewEmployees();
         }
-        if(choiceAnswers === 'View Department'){
+        if(choiceAnswers.choices === 'View Department'){
             viewDepartment();
         }
-        if(choiceAnswers === 'Add a Department'){
+        if(choiceAnswers.choices === 'Add a Department'){
             addDepartment();
         }
-        if(choiceAnswers === 'Add an Employee'){
+        if(choiceAnswers.choices === 'Add an Employee'){
             addEmployee();
         }
-        if(choiceAnswers === 'Update an Employee'){
+        if(choiceAnswers.choices === 'Update an Employee'){
             updateEmployee();
         }
-        if(choiceAnswers === 'Add Employee'){
+        if(choiceAnswers.choices === 'Add Employee'){
             addEmployee();
         }
-        if(choiceAnswers === 'Add role'){
+        if(choiceAnswers.choices === 'Add role'){
             addRole();
         }
-        if(choiceAnswers === 'Add Department'){
+        if(choiceAnswers.choices === 'Add Department'){
 
         }
 
     });
 };
 
+function viewDepartment(){
+    connection.query(
+        'SELECT * FROM department;',
+        (err, result) =>{
+            if(err){
+                console.log("could not find results");
+            }
+            console.table(result);
+        }
+        
 
+    )
+
+}
+
+
+startApplication();
 //what do I need to do with console table?
 
 // Acceptance Criteria
