@@ -139,31 +139,99 @@ function addDepartment(){
 };
 
 //Add a Role
+// function addRole(){
+//     const sql= 'SELECT * FROM department'
+//     connection.promise().query(sql, (error, response)=>{
+//         if(error){
+//             console.log("Couldnt find connection");
+//         }
+//         //set array for Department
+//         let 
+//     })
+//     inquirer.prompt([{
+//         type: "input",
+//         name : "newRole",
+//         message: "Please enter name of new Role?"
+//     }])
+// }
 
 
 
 
 // //Add an Employee 
-// function addEmployee(){
-//     inquirer.
-//     prompt([{
-//         type: 'input',
-//         name: 'firstName',
-//         message: "What is the employee's first name?"
-//     },
-//     {
-//         type: 'input',
-//         name: 'lastName',
-//         message: "What is the employee's last Name?"
-//     }
-//     ])
-//     .then(choiceAnswers =>{})
+function addEmployee(){
+    inquirer.
+    prompt([{
+        type: 'input',
+        name: 'firstName',
+        message: "What is the employee's first name?"
+    },
+    {
+        type: 'input',
+        name: 'lastName',
+        message: "What is the employee's last Name?"
+    }
+    ])
+    .then(choiceAnswers =>{
 
-// }
+        const employeeCredentials = [choiceAnswers.firstName, choiceAnswers.lastName];
+        const employeeSQL = `SELECT roles.id, roles.title FROM roles`;
+        connection.promise().query(employeeSQL, (error, data) =>{
+            if(error) throw error;
+            const roles = data.map(({id, title})=> ({name: title, value: id}));
 
+        })  
+            inquirer.prompt([
+                {
+                    type:'list',
+                    name: 'role',
+                    message: 'What is the employees role?',
+                    choices: roles
+                }
+            ])
+            .then(choiceAnswers=>{
+                const employeeRole = choiceAnswers.roles;
+                employeeCredentials.push(employeeRole);
+                 
+                //find manager and add employee to manager
+                const findManager = `SELECT * FROM employee`;
+
+                connection.promise().query(findManager, (error, data)=>{
+                    if(error){
+                        console.log("Couldnt connect");
+                    }
+                    const addManager = data.map(({id, first_name, last_name}) => ({ value: id , name: first_name + " " + last_name}));
+                    //inquirer prompt to trigger questions
+                    inquirer.prompt([
+                    {
+                        type: 'list',
+                        name: 'manager',
+                        message: "Who is the new Employees Manager",
+                        choices: addManager
+
+                    }
+                ])
+                    .then(choiceAnswer =>{
+                        employeeCredentials.push(choiceAnswer.manager);
+                        managerSQL= `INSERT INTO employee (first_name, last_name, roles_id, manager_id)
+                                    VALUES (?,?,?,?)`;
+                        //query connection to add manager to new employee
+                        connection.query(managerSQL, employeeCredentials, (error, response)=>{
+                            if (error){
+                                console.log("Couldn't Connect");
+                            }
+                            console.log("Employee has been added to Database");
+                            console.table(response);
+                            viewAllEmployees();
+                            startApplication();
+                        });
+                    });
+                  });
+                });
+             });
+          };
 
 startApplication();
-//what do I need to do with console table?
 
 // Acceptance Criteria
 
