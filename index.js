@@ -115,6 +115,33 @@ function viewEmployees(){
     
         }
 
+//Add an department
+function addDepartment(){
+    inquirer.prompt([{
+        type: 'input',
+        name: 'newDepartment',
+        message: 'What department would you like to add?'
+    }
+])
+.then((choiceAnswer) =>{
+    let departmentQuery = `INSERT INTO department(department_name) VALUES (?)`;
+    connection.query(departmentQuery, choiceAnswer.newDepartment, (error, response) =>{
+        if(error){
+            console.log("Couldnt find results");
+        } 
+        viewDepartment();
+        console.table(response);
+        startApplication();
+        //Why doesnt the whole table show
+    }
+    ); 
+});
+};
+
+//Add a Role
+
+
+
 
 // //Add an Employee 
 // function addEmployee(){
@@ -140,10 +167,6 @@ startApplication();
 
 // Acceptance Criteria
 
-// WHEN I choose to view all employees
-// THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
-// WHEN I choose to add a department
-// THEN I am prompted to enter the name of the department and that department is added to the database
 // WHEN I choose to add a role
 // THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
 // WHEN I choose to add an employee
