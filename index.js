@@ -31,7 +31,6 @@ function startApplication(){
                     'Exit'
                 ]
             }
-    
         ])
     .then((choiceAnswers) =>{
         console.log(choiceAnswers);
@@ -92,22 +91,48 @@ function viewRoles(){
         }
     )
 }
-
+//missing salary title, department_id, 
 function viewEmployees(){
-    connection.query(
-        'SELECT * FROM employees;',
-        (err, result) =>{
-            if(err){
-                console.log("couldnt find results");
-            }
-            console.table(result);
+    let employeeQuery=    `SELECT employees.id,
+    employees.first_name,
+    employees.last_name,
+    roles.title,
+    employees.manager_id,
+    department.department_name AS 'department',
+    roles.salary 
+    FROM employees, roles, department
+    WHERE department.id = roles.department_id
+    AND roles.id = employees.role_id
+    ORDER BY employees.id ASC`;
+
+    connection.promise().query(employeeQuery)
+        .then(([rows, fields])=>{
+            console.table(rows);
+            startApplication();
+        })
+        .catch(console.log)
+        .then( () => connection.end());
+    
         }
-    )
-    }
 
 
+// //Add an Employee 
+// function addEmployee(){
+//     inquirer.
+//     prompt([{
+//         type: 'input',
+//         name: 'firstName',
+//         message: "What is the employee's first name?"
+//     },
+//     {
+//         type: 'input',
+//         name: 'lastName',
+//         message: "What is the employee's last Name?"
+//     }
+//     ])
+//     .then(choiceAnswers =>{})
 
-
+// }
 
 
 startApplication();
