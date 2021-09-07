@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const db = require('../../modules/module-12/u-develop-it/db/connection');
+//const db = require('../../modules/module-12/u-develop-it/db/connection');
 
 //create the connection to database
 const connection = mysql.createConnection({
@@ -139,24 +139,46 @@ function addDepartment(){
 };
 
 //Add a Role
-// function addRole(){
-//     const sql= 'SELECT * FROM department'
-//     connection.promise().query(sql, (error, response)=>{
-//         if(error){
-//             console.log("Couldnt find connection");
-//         }
-//         //set array for Department
-//         let 
-//     })
-//     inquirer.prompt([{
-//         type: "input",
-//         name : "newRole",
-//         message: "Please enter name of new Role?"
-//     }])
-// }
+function addRole(){
+    inquirer.prompt([
+        {
+        name: 'title',
+        type: 'input',
+        message: 'What Role title would you like to add?'
+        },
+        {
+            name: 'salary',
+            type: 'input',
+            message: 'What is the salary for the corresponding role?'
+        },
+        {
+            input: 'input',
+            name:'department_id',
+            message: 'What is the corresponding department id for the new role?'
+        }
+    ])
+    .then(choiceAnswers=>{
+        const roleQuery=[choiceAnswers.title, choiceAnswers.salary, choiceAnswers.department_id];
+        const insertSQL = `INSERT INTO roles(title, salary, department_id) VALUES (?,?,?)`;
+        const searchRoles= `SELECT * FROM roles`;
+        db.query(insertSQL, roleQuery, function(err){
+            if(err){
+                console.log(err);
+            }
+            console.log("New Role has been added to Employee Database");
+            db.query(searchRoles, (err, result)=>{
+                if(err){
+                    return;
+                }
+                console.table(result);
+                startApplication();
 
-
-
+            });
+   
+  
+        });
+    });
+}
 
 // //Add an Employee 
 function addEmployee(){
@@ -233,7 +255,10 @@ function addEmployee(){
 
 startApplication();
 
+
 // Acceptance Criteria
+
+//why does the role not work?
 
 // WHEN I choose to add a role
 // THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
