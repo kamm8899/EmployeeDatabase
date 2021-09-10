@@ -1,0 +1,103 @@
+// const employeeSQL = `SELECT roles.id, roles.title FROM roles`;
+    // connection.promise().query(employeeSQL)
+    // .then(([role, fields])=>{
+    //     const role = data.map(({id, title})=> ({name: title, value: id}));
+    //     console.table(rows);
+        
+    // })
+    // .catch(console.log)
+    // .then( () => connection.end());;
+
+
+    // const findManager = `SELECT * FROM employee`;
+    // inquirer.
+    // prompt([{
+    //     type: 'input',
+    //     name: 'firstName',
+    //     message: "What is the employee's first name?"
+    // },
+    // {
+    //     type: 'input',
+    //     name: 'lastName',
+    //     message: "What is the employee's last Name?"
+    // },
+    // {
+    //     type:'list',
+    //     name: 'role',
+    //     message: 'What is the employees role?',
+    //     choices: roles
+    // },
+    // {
+    //     type: 'list',
+    //     name: 'manager',
+    //     message: "Who is the new Employees Manager",
+    //     choices: addManager
+    // }
+    // ])
+    // .then(choiceAnswers =>{
+
+    //     const employeeCredentials = [choiceAnswers.firstName, choiceAnswers.lastName];
+    //     const employeeSQL = `SELECT roles.id, roles.title FROM roles`;
+
+    //     connection.promise().query(employeeSQL)
+    //     .then(([roles,fields])=>{
+
+    //     })
+    //         if(error) throw error;
+    //         console.log(data);
+    //         const roles = data.map(({id, title})=> ({name: title, value: id}));
+
+
+    //         connection.promise().query(employeeQuery)
+    //     .then(([rows, fields])=>{
+    //         console.table(rows);
+    //         startApplication();
+    //     })
+    //     .catch(console.log)
+    //     .then( () => connection.end());
+    
+    //     }
+
+    //     })  
+           
+    //         ])
+    //         .then(choiceAnswers=>{
+    //             const employeeRole = choiceAnswers.roles;
+    //             employeeCredentials.push(employeeRole);
+                 
+    //             //find manager and add employee to manager
+    //             const findManager = `SELECT * FROM employee`;
+
+    //             connection.promise().query(findManager, (error, data)=>{
+    //                 if(error){
+    //                     console.log("Couldnt connect");
+    //                 }
+    //                 const addManager = data.map(({id, first_name, last_name}) => ({ value: id , name: first_name + " " + last_name}));
+    //                 //inquirer prompt to trigger questions
+    //                 inquirer.prompt([
+    //                 {
+    //                     type: 'list',
+    //                     name: 'manager',
+    //                     message: "Who is the new Employees Manager",
+    //                     choices: addManager
+
+    //                 }
+    //             ])
+    //                 .then(choiceAnswer =>{
+    //                     employeeCredentials.push(choiceAnswer.manager);
+    //                     managerSQL= `INSERT INTO employee (first_name, last_name, roles_id, manager_id)
+    //                                 VALUES (?,?,?,?)`;
+    //                     //query connection to add manager to new employee
+    //                     connection.query(managerSQL, employeeCredentials, (error, response)=>{
+    //                         if (error){
+    //                             console.log("Couldn't Connect");
+    //                         }
+    //                         console.log("Employee has been added to Database");
+    //                         console.table(response);
+    //                         viewAllEmployees();
+    //                         startApplication();
+    //                     });
+    //                 });
+    //               });
+    //             });
+    //          });
