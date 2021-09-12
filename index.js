@@ -69,8 +69,9 @@ function viewDepartment() {
       console.log("could not find results");
     }
     console.table(result);
+    startApplication();
   });
-}
+};
 
 function viewRoles() {
   connection.query("SELECT * FROM roles;", (err, result) => {
@@ -78,8 +79,9 @@ function viewRoles() {
       console.log("couldn not find results");
     }
     console.table(result);
+    startApplication();
   });
-}
+};
 //missing salary title, department_id,
 function viewEmployees() {
   let employeeQuery = `SELECT employees.id,
@@ -103,6 +105,7 @@ function viewEmployees() {
     })
     .catch(console.log)
     .then(() => connection.end());
+    
 }
 
 //Add an department
@@ -116,18 +119,20 @@ function addDepartment() {
       },
     ])
     .then((choiceAnswer) => {
-      let departmentQuery = `INSERT INTO department(department_name) VALUES (?)`;
-      connection.query(
-        departmentQuery,
-        choiceAnswer.newDepartment,
-        (error, response) => {
+      const departmentQuery = `INSERT INTO department(department_name) VALUES (?)`;
+      const searchDepartment = `SELECT * FROM department`;
+      connection.query(departmentQuery, choiceAnswer.newDepartment,(error, result) => {
           if (error) {
             console.log("Couldnt find results");
           }
-          viewDepartment();
-          console.table(response);
+          connection.query(searchDepartment, (err, result)=>{
+            if(err){
+              return;
+            }
+            console.table(result);
           startApplication();
-          //Why doesnt the whole table show
+          })
+          // viewDepartment();
         }
       );
     });
