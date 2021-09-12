@@ -101,3 +101,14 @@
     //               });
     //             });
     //          });
+
+
+models.products.findAll({
+  include: [
+    {
+        model: models.comments, include: 
+        [models.comments.users] 
+        
+        }
+  ]
+}) 

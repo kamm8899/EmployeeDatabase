@@ -48,7 +48,7 @@ function startApplication() {
       if (choiceAnswers.choices === "Add an Employee") {
         addEmployee();
       }
-      if (choiceAnswers.choices === "Update an Employee") {
+      if (choiceAnswers.choices === "Update an Employee Role") {
         updateEmployee();
       }
       if (choiceAnswers.choices === "Add Employee") {
@@ -57,7 +57,8 @@ function startApplication() {
       if (choiceAnswers.choices === "Add role") {
         addRole();
       }
-      if (choiceAnswers.choices === "Add Department") {
+      if(choiceAnswers.choices === "Exit"){
+        process.exit(1);
       }
     });
 }
@@ -190,7 +191,7 @@ function addEmployee() {
         name: first_name + " " + last_name,
         value: id,
       }));
-
+      employees.push("none");
       inquirer
         .prompt([
           {
@@ -217,8 +218,10 @@ function addEmployee() {
           },
         ])
         .then((result) => {
+          console.log(result);
+          const manager= (result.manager=== "none") ? null: result.manager;
           connection.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id)
-                            VALUES (?,?,?,?)`,[result.first_name, result.last_name, result.roles_id, result.manager_id], function(err){
+                            VALUES (?,?,?,?)`,[result.firstName, result.lastName, result.role, manager], function(err){
                                 if(err) throw err;
                             console.log("The Employee has been created");
                             connection.query(`SELECT * FROM employees`, (err, result) =>{
@@ -261,12 +264,13 @@ function updateEmployee(){
       choiceAnswers.last_name
     ];
     const roleUpdateInsert = `UPDATE employees SET role_id = ? WHERE first_name = ? AND last_name`;
+    const updatedRoleQuery = `SELECT * FROM employees`;
     connection.query(roleUpdateInsert, roleUpdate, function (err) {
       if (err) {
         console.log(err);
       }
       console.log("Role has been changed");
-      connection.query(searchRoles, (err, result) => {
+      connection.query(updatedRoleQuery, (err, result) => {
         if (err) {
           return;
         }
@@ -279,9 +283,3 @@ function updateEmployee(){
 
 startApplication();
 
-// Acceptance Criteria
-
-// WHEN I choose to add an employee
-// THEN I am prompted to enter the employee’s first name, last name, role, and manager and that employee is added to the database
-// WHEN I choose to update an employee role
-// THEN I am prompted to select an employee to update and their new role and this information is updated in the database
