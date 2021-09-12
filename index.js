@@ -20,13 +20,11 @@ function startApplication() {
         choices: [
           "View all roles",
           "View all Employees",
+          "View Department",
           "Add a Department",
           "Add an Employee",
-          "Update an Employee",
-          "View Department",
-          "Add Employee",
           "Add role",
-          "Add Department",
+          "Update an Employee",
           "Exit",
         ],
       },
@@ -50,9 +48,6 @@ function startApplication() {
       }
       if (choiceAnswers.choices === "Update an Employee Role") {
         updateEmployee();
-      }
-      if (choiceAnswers.choices === "Add Employee") {
-        addEmployee();
       }
       if (choiceAnswers.choices === "Add role") {
         addRole();
