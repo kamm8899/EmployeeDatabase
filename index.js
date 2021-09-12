@@ -24,7 +24,7 @@ function startApplication() {
           "Add a Department",
           "Add an Employee",
           "Add role",
-          "Update an Employee",
+          "Update an Employee Role",
           "Exit",
         ],
       },
@@ -168,7 +168,7 @@ function addRole() {
         console.log("New Role has been added to Employee Database");
         connection.query(searchRoles, (err, result) => {
           if (err) {
-            return;
+            console.log(err);
           }
           console.table(result);
           startApplication();
