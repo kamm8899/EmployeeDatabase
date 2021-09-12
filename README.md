@@ -25,6 +25,8 @@
   This particular project can be used for anytype of company, small or large.
 
   # Demonstration
+   ![ScreenShot](./media/Employee.png) 
+  [The video can be viewed through clicking on this link:](https://youtu.be/QiRzqXBpq2I)
 
    ## Contribution
   There were no contributions from Students, but I did utilize the TA's during Office Hours
