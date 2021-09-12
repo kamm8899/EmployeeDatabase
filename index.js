@@ -263,7 +263,7 @@ function updateEmployee(){
       choiceAnswers.first_name,
       choiceAnswers.last_name
     ];
-    const roleUpdateInsert = `UPDATE employees SET role_id = ? WHERE first_name = ? AND last_name`;
+    const roleUpdateInsert = `UPDATE employees SET role_id = ? WHERE first_name = ? AND last_name = ?`;
     const updatedRoleQuery = `SELECT * FROM employees`;
     connection.query(roleUpdateInsert, roleUpdate, function (err) {
       if (err) {
@@ -283,3 +283,4 @@ function updateEmployee(){
 
 startApplication();
 
+//Role is not updating correctly
